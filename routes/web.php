@@ -21,12 +21,13 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\ResetPassword;
+use App\Http\Controllers\EstudianteCursoController;
 use App\Http\Controllers\ChangePassword;            
             
 
@@ -39,7 +40,9 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
-	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
+	// Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
+	Route::get('/dashboard', [EstudianteCursoController::class, 'consultas'])->name('home')->middleware('auth');
+	Route::post('/guardar-estudiante', [EstudianteCursoController::class, 'guardarEstudiante'])->name('guardar-estudiante');
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
 	Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');

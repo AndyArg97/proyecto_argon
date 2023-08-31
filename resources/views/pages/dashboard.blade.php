@@ -10,13 +10,37 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Top 5 Estudiantes</p>
                                     <h5 class="font-weight-bolder">
-                                        $53,000
+                                        <div>
+                                        <!-- @foreach ($top5Estudiantes as $estudiante)
+                                            <p>{{$estudiante->nombre}}</p>
+                                            <p>{{$estudiante->CI}}</p>
+                                        @endforeach -->
+                                        <div class="card-body">
+                                            <form action="{{ route('guardar-estudiante') }}" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre del estudiante</label>
+                                                    <input type="text" name="nombre" class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="curso_id">Selecciona el curso</label>
+                                                    <select name="curso_id" class="form-control" required>
+                                                        <option value="">Selecciona un curso</option>
+                                                        @foreach ($cursos as $curso)
+                                                            <option value="{{ $curso->id }}">{{ $curso->nombre }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Guardar Estudiante</button>
+                                            </form>
+                                        </div>
+
+                                        </div>  
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
+                                        <span class="text-success text-sm font-weight-bolder"></span>
                                     </p>
                                 </div>
                             </div>
@@ -60,9 +84,12 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Ordenados por CI</p>
                                     <h5 class="font-weight-bolder">
-                                        +3,462
+                                        <!-- @foreach ($estudianteOrden as $orden)
+                                            <p>{{$orden->nombre}}</p>
+                                            <p>{{$orden->CI}}</p>
+                                        @endforeach -->
                                     </h5>
                                     <p class="mb-0">
                                         <span class="text-danger text-sm font-weight-bolder">-2%</span>
@@ -108,17 +135,21 @@
             <div class="col-lg-7 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
-                        <h6 class="text-capitalize">Sales overview</h6>
-                        <p class="text-sm mb-0">
+                        <h6 class="text-capitalize">TOP 5 del grado 6</h6>
+                        @foreach ($top5Estudiantes as $estudiante)
+                            <p>{{$estudiante->nombre}}</p>
+                            <p>{{$estudiante->CI}}</p>
+                        @endforeach
+                        <!-- <p class="text-sm mb-0">
                             <i class="fa fa-arrow-up text-success"></i>
                             <span class="font-weight-bold">4% more</span> in 2021
-                        </p>
+                        </p> -->
                     </div>
-                    <div class="card-body p-3">
+                    <!-- <div class="card-body p-3">
                         <div class="chart">
                             <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-5">
@@ -176,13 +207,17 @@
                 <div class="card ">
                     <div class="card-header pb-0 p-3">
                         <div class="d-flex justify-content-between">
-                            <h6 class="mb-2">Sales by Country</h6>
+                            <h6 class="mb-2">Ordenados por CI</h6>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table align-items-center ">
                             <tbody>
-                                <tr>
+                                @foreach ($estudianteOrden as $orden)
+                                    <p>{{$orden->nombre}}</p>
+                                    <p>{{$orden->CI}}</p>
+                                @endforeach
+                                <!-- <tr>
                                     <td class="w-30">
                                         <div class="d-flex px-2 py-1 align-items-center">
                                             <div>
@@ -305,7 +340,7 @@
                                             <h6 class="text-sm mb-0">32.14%</h6>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

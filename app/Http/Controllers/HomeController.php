@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.dashboard');
+        $curso = Curso::find(6);
+        if (!$curso) 
+        {
+            return response()->json(['message' => 'Curso no existe'], 404);
+        }
+        $estudiantes = $curso->estudiantes->take(5);
+        return view('pages.dashboard', ['estudiantes' => $estudiantes]);
     }
 }

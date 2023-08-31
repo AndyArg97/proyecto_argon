@@ -36,7 +36,8 @@ class EstudianteCursoController extends Controller
             return response()->json(['message' => 'Curso no existe'], 404);
         }
         $estudiantes = $curso->estudiantes->take(5);
-        return response()->json(['estudiantes' => $estudiantes]);
+        // return response()->json(['estudiantes' => $estudiantes]);
+        return view('pages.dashboard',['estudiantes' => $estudiantes]);
     }
 
     public function guardarEstudiante(Request $request)
@@ -56,7 +57,8 @@ class EstudianteCursoController extends Controller
 
         $curso->estudiantes()->attach($estudiante); 
         
-        return Response()->json(['message' => 'Estudiante insertado exitosamente', 'data' => $estudiante], 201);
+        //return Response()->json(['message' => 'Estudiante insertado exitosamente', 'data' => $estudiante], 201);
+        return redirect()->route('home');
 
     }
     private function generateCI()
@@ -65,9 +67,31 @@ class EstudianteCursoController extends Controller
         return mt_rand(1000000, 9999999);
     }
 
-    public function ordenarEstudiantes(Request $request) {
+    public function ordenarEstudiantes() {
         $estudianteOrden = Estudiante::orderBy('CI','desc')
         ->get();
-        return Response()->json(['estudiantes' => $estudianteOrden]);
+        // return Response()->json(['estudiantes' => $estudianteOrden]);
+        return view('pages.dashboard',['estudiantes' => $estudianteOrden]);
+        
+    }
+
+    public function consultas() {
+        $curso = Curso::find(6);
+        if (!$curso) 
+        {
+            return response()->json(['message' => 'Curso no existe'], 404);
+        }
+    
+        $top5Estudiantes = $curso->estudiantes->take(5);
+        $estudianteOrden = Estudiante::orderBy('CI','desc')
+        ->get();
+        $cursos = Curso::all();
+        // return Response()->json(['estudiantes' => $estudianteOrden]);
+        return view('pages.dashboard', [
+            'curso' => $curso,
+            'top5Estudiantes' => $top5Estudiantes,
+            'estudianteOrden' => $estudianteOrden,
+            'cursos' => $cursos,
+        ]);
     }
 }
