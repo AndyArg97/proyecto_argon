@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Top 5 Estudiantes</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Registrar estudiante</p>
                                     <h5 class="font-weight-bolder">
                                         <div>
                                         <!-- @foreach ($top5Estudiantes as $estudiante)
@@ -29,7 +29,7 @@
                                                     <select name="curso_id" class="form-control" required>
                                                         <option value="">Selecciona un curso</option>
                                                         @foreach ($cursos as $curso)
-                                                            <option value="{{ $curso->id }}">{{ $curso->nombre }}</option>
+                                                            <option value="{{ $curso->id }}">{{ $curso->descripcion }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
